@@ -8,7 +8,7 @@ const _relucent_module = Ref{Py}()
 _root_dir() = normpath(joinpath(@__DIR__, ".."))
 _python_executable() = pyconvert(String, pyimport("sys").executable)
 _importlib_util() = pyimport("importlib.util")
-_bootstrap_stamp_path() = joinpath(_root_dir(), ".relucent-bootstrap-stamp")
+_bootstrap_stamp_path() = joinpath(first(DEPOT_PATH), "relucent", ".relucent-bootstrap-stamp")
 
 function _bootstrap_fingerprint()
     parts = (
@@ -20,17 +20,24 @@ function _bootstrap_fingerprint()
 end
 
 function _bootstrap_is_current()
-    if !isfile(_bootstrap_stamp_path())
+    stamp_path = _bootstrap_stamp_path()
+    if !isfile(stamp_path)
         return false
     end
     if !_has_python_module("torch") || !_has_python_module("relucent")
         return false
     end
-    return strip(read(_bootstrap_stamp_path(), String)) == _bootstrap_fingerprint()
+    try
+        return strip(read(stamp_path, String)) == _bootstrap_fingerprint()
+    catch
+        return false
+    end
 end
 
 function _write_bootstrap_stamp!()
-    write(_bootstrap_stamp_path(), _bootstrap_fingerprint() * "\n")
+    stamp_path = _bootstrap_stamp_path()
+    mkpath(dirname(stamp_path))
+    write(stamp_path, _bootstrap_fingerprint() * "\n")
     return nothing
 end
 
@@ -72,7 +79,11 @@ function __init__()
     if !_bootstrap_is_current()
         _ensure_torch_cpu!()
         _ensure_relucent!()
-        _write_bootstrap_stamp!()
+        # Never fail import just because stamp persistence is unavailable.
+        try
+            _write_bootstrap_stamp!()
+        catch
+        end
     else
         _relucent_module[] = pyimport("relucent")
     end
