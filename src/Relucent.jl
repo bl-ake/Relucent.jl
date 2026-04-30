@@ -1,4 +1,4 @@
-module PyRelucent
+module Relucent
 
 using PythonCall
 
@@ -79,11 +79,11 @@ function __init__()
 end
 
 """
-    pyrelucent() -> PythonCall.Py
+    relucent() -> PythonCall.Py
 
 Return the underlying Python `relucent` module object.
 """
-function pyrelucent()
+function relucent()
     if !isassigned(_relucent_module)
         _relucent_module[] = pyimport("relucent")
     end
@@ -95,21 +95,21 @@ end
 
 Return the Python package version exposed by `relucent.__version__`.
 """
-version() = string(pygetattr(pyrelucent(), "__version__"))
+version() = string(pygetattr(relucent(), "__version__"))
 
-const Complex = (args...; kwargs...) -> pygetattr(pyrelucent(), "Complex")(args...; kwargs...)
-const Polyhedron = (args...; kwargs...) -> pygetattr(pyrelucent(), "Polyhedron")(args...; kwargs...)
-const SSManager = (args...; kwargs...) -> pygetattr(pyrelucent(), "SSManager")(args...; kwargs...)
-const convert = (args...; kwargs...) -> pygetattr(pyrelucent(), "convert")(args...; kwargs...)
-const get_env = (args...; kwargs...) -> pygetattr(pyrelucent(), "get_env")(args...; kwargs...)
-const mlp = (args...; kwargs...) -> pygetattr(pyrelucent(), "mlp")(args...; kwargs...)
-const set_seeds = (args...; kwargs...) -> pygetattr(pyrelucent(), "set_seeds")(args...; kwargs...)
-const split_sequential = (args...; kwargs...) -> pygetattr(pyrelucent(), "split_sequential")(args...; kwargs...)
-const get_colors = (args...; kwargs...) -> pygetattr(pyrelucent(), "get_colors")(args...; kwargs...)
-const plot_complex = (args...; kwargs...) -> pygetattr(pyrelucent(), "plot_complex")(args...; kwargs...)
-const plot_polyhedron = (args...; kwargs...) -> pygetattr(pyrelucent(), "plot_polyhedron")(args...; kwargs...)
+const Complex = (args...; kwargs...) -> pygetattr(relucent(), "Complex")(args...; kwargs...)
+const Polyhedron = (args...; kwargs...) -> pygetattr(relucent(), "Polyhedron")(args...; kwargs...)
+const SSManager = (args...; kwargs...) -> pygetattr(relucent(), "SSManager")(args...; kwargs...)
+const convert = (args...; kwargs...) -> pygetattr(relucent(), "convert")(args...; kwargs...)
+const get_env = (args...; kwargs...) -> pygetattr(relucent(), "get_env")(args...; kwargs...)
+const mlp = (args...; kwargs...) -> pygetattr(relucent(), "mlp")(args...; kwargs...)
+const set_seeds = (args...; kwargs...) -> pygetattr(relucent(), "set_seeds")(args...; kwargs...)
+const split_sequential = (args...; kwargs...) -> pygetattr(relucent(), "split_sequential")(args...; kwargs...)
+const get_colors = (args...; kwargs...) -> pygetattr(relucent(), "get_colors")(args...; kwargs...)
+const plot_complex = (args...; kwargs...) -> pygetattr(relucent(), "plot_complex")(args...; kwargs...)
+const plot_polyhedron = (args...; kwargs...) -> pygetattr(relucent(), "plot_polyhedron")(args...; kwargs...)
 
-export pyrelucent,
+export relucent,
     version,
     Complex,
     Polyhedron,

@@ -1,6 +1,6 @@
-# PyRelucent
+# Relucent
 
-[![Build Status](https://github.com/bl-ake/PyRelucent.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/bl-ake/PyRelucent.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/bl-ake/Relucent.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/bl-ake/Relucent.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 Julia wrapper for the Python package [`relucent`](https://github.com/bl-ake/relucent).
 
@@ -12,14 +12,14 @@ Julia wrapper for the Python package [`relucent`](https://github.com/bl-ake/relu
 
 ## Versioning
 
-`PyRelucent.jl` mirrors the version of the upstream Python [`relucent`](https://github.com/bl-ake/relucent) package. A given `PyRelucent` version `x.y.z` wraps `relucent x.y.z` and exposes the same public API.
+`Relucent.jl` mirrors the version of the upstream Python [`relucent`](https://github.com/bl-ake/relucent) package. A given `Relucent` version `x.y.z` wraps `relucent x.y.z` and exposes the same public API.
 
 ## Usage
 
 Networks are specified as a list of `(weight, bias)` pairs, where each weight is a `Matrix` with shape `(out, in)` and each bias is a `Vector` of length `out`.
 
 ```julia
-using PyRelucent
+using Relucent
 
 # Define a 2 → 10 → 5 → 1 network with random weights
 W1, b1 = randn(10, 2), randn(10)
@@ -27,7 +27,7 @@ W2, b2 = randn(5, 10), randn(5)
 W3, b3 = randn(1,  5), randn(1)
 
 # Initialize a Complex to track activation regions
-cplx = PyRelucent.Complex([(W1, b1), (W2, b2), (W3, b3)])
+cplx = Relucent.Complex([(W1, b1), (W2, b2), (W3, b3)])
 
 # Discover activation regions via local search
 cplx.bfs()
@@ -44,4 +44,4 @@ println(sum(length(poly.shis) for poly in cplx) / length(cplx))
 println(cplx.get_dual_graph())
 ```
 
-Use `PyRelucent.pyrelucent()` if you need direct access to the Python module.
+Use `Relucent.relucent()` if you need direct access to the Python module.

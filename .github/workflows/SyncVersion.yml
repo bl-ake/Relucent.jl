@@ -22,7 +22,7 @@ jobs:
             | python3 -c "import sys, json; print(json.load(sys.stdin)['info']['version'])")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Get current PyRelucent.jl version
+      - name: Get current Relucent.jl version
         id: current
         run: |
           VERSION=$(grep '^version' Project.toml | sed 's/version = "\(.*\)"/\1/')
