@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Julia TagBot
-        uses: JuliaRegistries/TagBot@v1.25.7
+        uses: JuliaRegistries/TagBot@v1.25.10
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # For commits that modify workflow files: SSH key enables tagging, but
